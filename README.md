@@ -1,9 +1,14 @@
 # CubeBackend
 
-This application is developed in school. We are the group 4: (Romain, Tanguy, Nathan, Wayan). \n
-The goal it's to create an API in C# dotnet 6. \n
-We need to uses relation database, so with have choose MySql and for work with it we use docker.
 
-## For the connection to Mysql you need to install this package
+# What is this project ?
 
-dotnet add package MySql.Data
+This application is developed in school. We are the group 4: Romain (me), Tanguy, Nathan, Wayan.
+On this Project the goal it's to create an API in C# and we have chose dotnet 6.
+We need to uses relation database, so we chose MySql with PhpMyAdmin. 
+We use Docker, more specifically docker-compose.yml because it's possible to use it on MacOs, Windows, Linux so it's more easy for all.
+
+## How to uses this project ?
+
+You can clone the project and download "MySql.Data" with `dotnet add package MySql.Data`.
+Doawload [Docker](https://www.docker.com/products/docker-desktop/) if you don't have and use `docker compose up -d` at the root of the project. Argument -d it is to initialize in background
