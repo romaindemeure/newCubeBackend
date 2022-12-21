@@ -13,7 +13,7 @@ namespace WebApplication1.Controllers
             string password = "rWjo0jpFuSpQwTQRM5n7Kg";
 
             // Connection String.
-            String connString = "Server=" + host + ";Database=" + database
+            string connString = "Server=" + host + ";Database=" + database
                                 + ";port=" + port + ";User Id=" + username + ";password=" + password;
 
             MySqlConnection conn = new MySqlConnection(connString);
