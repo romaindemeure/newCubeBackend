@@ -11,4 +11,4 @@ We use Docker, more specifically docker-compose.yml because it's possible to use
 ## How to uses this project ?
 
 You can clone the project and download "MySql.Data" with `dotnet add package MySql.Data`.
-[Doawload Docker](https://www.docker.com/products/docker-desktop/) if you don't have and use `docker compose up -d` at the root of the project. Argument -d it is to initialize in background
+[Download Docker](https://www.docker.com/products/docker-desktop/) if you don't have and use `docker compose up -d` at the root of the project. Argument -d it is to initialize in background
