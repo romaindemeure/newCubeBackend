@@ -1,0 +1,27 @@
+version: '3.8'
+
+volumes:
+  data: # /var/lib/docker
+
+services:
+  db: 
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=Khy1W2hb4CPvAOrx1RIHVb6IUTTMkiMsnI1wE9sNXuE
+      - MYSQL_DATABASE=cubeSQL
+      - MYSQL_USER=cubeUser
+      - MYSQL_PASSWORD=rWjo0jpFuSpQwTQRM5n7Kg
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=Khy1W2hb4CPvAOrx1RIHVb6IUTTMkiMsnI1wE9sNXuE
+
