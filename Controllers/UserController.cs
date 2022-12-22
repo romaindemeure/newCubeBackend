@@ -8,10 +8,11 @@ using System.Diagnostics;
 using System.Runtime.Intrinsics.Arm;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using newCubeBackend.UserModel;
 
 
 // Define name of space. 
-namespace newCubeBackend.User
+namespace newCubeBackend.UserControllers
 {
     // method Route it's the link of API endpoint.
     [Route("api/User")]
@@ -88,6 +89,40 @@ namespace newCubeBackend.User
 
             return json;
         }
+
+        [HttpPost]
+        public JsonResult Post(User user)
+        {
+            // string query = @"INSERT INTO cubeSQL.userTable(authMail, authPassword) VALUES(@Mail, @Password)";
+            string query = @"INSERT INTO cubeSQL.userTable(first_name, last_name, email, user_password, address, postal_code, town, phone_number, admin) 
+                            VALUES (@FirstName, @LastName, @Email, @UserPassword, @Address, @PostalCode, @Town, @PhoneNumber, @Admin)";
+
+            DataTable table = new DataTable();
+            MySqlDataReader myReader;
+            MySqlConnection conn = DBConnect.GetDBConnection();
+
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+
+            cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", user.LastName);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
+            cmd.Parameters.AddWithValue("@UserPassword", user.UserPassword);
+            cmd.Parameters.AddWithValue("@Address", user.Address);
+            cmd.Parameters.AddWithValue("@PostalCode", user.PostalCode);
+            cmd.Parameters.AddWithValue("@Town", user.Town);
+            cmd.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
+            cmd.Parameters.AddWithValue("@Admin", user.Admin);
+
+            myReader = cmd.ExecuteReader();
+            table.Load(myReader);
+
+            myReader.Close();
+            conn.Close();
+
+            return new JsonResult("Added Successfully");
+        }
+
     }
 }
 
