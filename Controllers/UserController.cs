@@ -1,13 +1,8 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using newCubeBackend.Connection;
 using System.Data;
-using System.Diagnostics;
-using System.Runtime.Intrinsics.Arm;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 using newCubeBackend.UserModel;
 
 
@@ -68,7 +63,7 @@ namespace newCubeBackend.UserControllers
         [HttpGet("{id}")]
         public String GetById(int id)
         {
-            string query = "SELECT * FROM userTable WHERE id = @Id";
+            string query = "SELECT * FROM userTable WHERE id_user = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -94,7 +89,7 @@ namespace newCubeBackend.UserControllers
         public JsonResult Post(User user)
         {
             // string query = @"INSERT INTO cubeSQL.userTable(authMail, authPassword) VALUES(@Mail, @Password)";
-            string query = @"INSERT INTO cubeSQL.userTable(first_name, last_name, email, user_password, address, postal_code, town, phone_number, admin) 
+            string query = @"INSERT INTO userTable(first_name, last_name, email, user_password, address, postal_code, town, phone_number, admin) 
                             VALUES (@FirstName, @LastName, @Email, @UserPassword, @Address, @PostalCode, @Town, @PhoneNumber, @Admin)";
 
             DataTable table = new DataTable();
@@ -126,7 +121,7 @@ namespace newCubeBackend.UserControllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"delete from userTable where id = @Id;";
+            string query = @"delete from userTable where id_user = @Id;";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -146,7 +141,47 @@ namespace newCubeBackend.UserControllers
             return new JsonResult("Deleted Successfully");
         }
 
+        [HttpPut("{id}")]
+        public JsonResult Put(int id, User user)
+        {
+            var sql = @"UPDATE userTable
+                        SET first_name = @FirstName,  
+                        last_name = @LastName, 
+                        email = @Email, 
+                        user_password = @Password, 
+                        address = @Address, 
+                        postal_code = @PostalCode, 
+                        town = @Town, 
+                        phone_number = @PhoneNumber 
+                        WHERE id_user = @Id";
 
+            DataTable table = new DataTable();
+            MySqlDataReader myReader;
+            MySqlConnection conn = DBConnect.GetDBConnection();
+
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+            cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", user.LastName);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
+            cmd.Parameters.AddWithValue("@Password", user.UserPassword);
+            cmd.Parameters.AddWithValue("@Address", user.Address);
+            cmd.Parameters.AddWithValue("@PostalCode", user.PostalCode);
+            cmd.Parameters.AddWithValue("@Town", user.Town);
+            cmd.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
+
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            myReader = cmd.ExecuteReader();
+            table.Load(myReader);
+
+            myReader.Close();
+            conn.Close();
+
+            return new JsonResult("Updated Successfully");
+
+        }
     }
 }
 
