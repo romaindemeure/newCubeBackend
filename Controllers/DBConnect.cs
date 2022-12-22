@@ -1,6 +1,6 @@
 using MySql.Data.MySqlClient;
 
-namespace WebApplication1.Controllers
+namespace newCubeBackend.Connection
 {
     public class DBConnect
     {

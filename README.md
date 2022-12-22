@@ -1,7 +1,7 @@
 # CubeBackend
 
 
-# What is this project ?
+## What is this project ?
 
 This application is developed in school. We are the group 4: Romain (me), Tanguy, Nathan, Wayan.
 On this Project the goal it's to create an API in C# and we have chose dotnet 6.
