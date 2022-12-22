@@ -123,16 +123,16 @@ INSERT INTO `fournisseur` (`IdFournisseur`, `nomFournisseur`, `emailFournisseur`
 --
 
 CREATE TABLE `utilisateur` (
-  `IdUtilisateur` int(11) NOT NULL,
-  `nomUtilisateur` varchar(255) NOT NULL,
-  `prenomUtilisateur` varchar(255) NOT NULL,
-  `emailUtilisateur` varchar(255) NOT NULL,
-  `motDePasseUtilisateur` varchar(255) NOT NULL,
-  `adresseUtilisateur` varchar(255) NOT NULL,
-  `codePostaleUtilisateur` int(5) NOT NULL,
-  `villeUtilisateur` varchar(255) NOT NULL,
-  `telephoneUtilisateur` int(15) NOT NULL,
-  `administrateur` tinyint(1) NOT NULL DEFAULT 0
+  `id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `postal_code` int(5) NOT NULL,
+  `town` varchar(255) NOT NULL,
+  `number` int(15) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

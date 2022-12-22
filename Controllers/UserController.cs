@@ -11,16 +11,16 @@ using System.Text.Json.Serialization;
 
 
 // Define name of space. 
-namespace newCubeBackend.Department
+namespace newCubeBackend.User
 {
     // method Route it's the link of API endpoint.
-    [Route("api/Department")]
+    [Route("api/User")]
     [ApiController]
-    // Creating a child class DepartmentController of ControllerBase
-    public class DepartmentController : ControllerBase
+    // Creating a child class UserController of ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public DepartmentController(IConfiguration configuration)
+        public UserController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -30,7 +30,7 @@ namespace newCubeBackend.Department
         public String Get()
         {
             // Create query in string with SQL command inside.
-            string query = "SELECT * FROM Department";
+            string query = "SELECT * FROM userTable";
 
             // Create object table with the method new DataTable() of type DataTable.
             DataTable table = new DataTable();
@@ -60,6 +60,32 @@ namespace newCubeBackend.Department
             string json = JsonConvert.SerializeObject(table, Formatting.Indented);
 
             // return it's the last command of the method Get(). he return the json define above.
+            return json;
+        }
+
+
+        [HttpGet("{id}")]
+        public String GetById(int id)
+        {
+            string query = "SELECT * FROM userTable WHERE id = @Id";
+
+            DataTable table = new DataTable();
+            MySqlDataReader myReader;
+            MySqlConnection conn = DBConnect.GetDBConnection();
+
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            myReader = cmd.ExecuteReader();
+            table.Load(myReader);
+
+            myReader.Close();
+            conn.Close();
+
+            string json = JsonConvert.SerializeObject(table, Formatting.Indented);
+
             return json;
         }
     }
