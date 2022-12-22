@@ -16,7 +16,7 @@ CREATE TABLE userTable (
 CREATE TABLE customerOrder (
   id_customer_order int AUTO_INCREMENT,
   number_item_customer varchar(255) NOT NULL,
-  customer_order_customer varchar(255) NOT NULL,
+  order_customer varchar(255) NOT NULL,
   price_customer varchar(255) NOT NULL,
   price_without_tcc_customer varchar(255) NOT NULL,
   order_date_customer varchar(255) NOT NULL,
