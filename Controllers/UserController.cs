@@ -123,6 +123,30 @@ namespace newCubeBackend.UserControllers
             return new JsonResult("Added Successfully");
         }
 
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+            string query = @"delete from userTable where id = @Id;";
+
+            DataTable table = new DataTable();
+            MySqlDataReader myReader;
+            MySqlConnection conn = DBConnect.GetDBConnection();
+
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            myReader = cmd.ExecuteReader();
+            table.Load(myReader);
+
+            myReader.Close();
+            conn.Close();
+
+            return new JsonResult("Deleted Successfully");
+        }
+
+
     }
 }
 
