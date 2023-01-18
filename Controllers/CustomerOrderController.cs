@@ -10,7 +10,7 @@ using newCubeBackend.CustomerOrderModel;
 namespace newCubeBackend.CustomerOrderController
 {
     // method Route it's the link of API endpoint.
-    [Route("api/CustomerOrder")]
+    [Route("api/CommandeClient")]
     [ApiController]
     // Creating a child class UserController of ControllerBase
     public class CustomerOrderController : ControllerBase
@@ -63,7 +63,7 @@ namespace newCubeBackend.CustomerOrderController
         [HttpGet("{id}")]
         public String GetById(int id)
         {
-            string query = "SELECT * FROM commandeClient WHERE id_commande_client = @Id";
+            string query = "SELECT * FROM commandeClient WHERE IdCommandeClient = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -89,7 +89,7 @@ namespace newCubeBackend.CustomerOrderController
         public JsonResult Post(CustomerOrder customer_order)
         {
             // string query = @"INSERT INTO cubeSQL.userTable(authMail, authPassword) VALUES(@Mail, @Password)";
-            string query = @"INSERT INTO commandeClient(nombre_article, numero_de_commande, prix, prix_hors_taxe, date_commande, reduction, cout_livraison) 
+            string query = @"INSERT INTO commandeClient(nombreArticleCClient, numeroCommandeCClient, prixTTCCClient, prixHorsTaxeCClient, dateCommandeCClient, reductionCClient, coutLivraisonCClient) 
                             VALUES (@Nombre_article, @Numero_de_commande, @Prix, @Prix_hors_taxe, @Date_commande, @Reduction, @Cout_livraison)";
 
             DataTable table = new DataTable();
@@ -119,7 +119,7 @@ namespace newCubeBackend.CustomerOrderController
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"delete from commandeClient where id_commande_client = @Id;";
+            string query = @"delete from commandeClient where IdCommandeClient = @Id;";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -143,14 +143,14 @@ namespace newCubeBackend.CustomerOrderController
         public JsonResult Put(int id, CustomerOrder customer_order)
         {
             var sql = @"UPDATE commandeClient
-                        SET nombre_article = @Nombre_article,  
-                        numero_de_commande = @Numero_de_commande, 
-                        prix = @Prix, 
-                        prix_hors_taxe = @Prix_hors_taxe, 
-                        date_commande = @Date_commande, 
-                        reduction = @Reduction, 
-                        cout_livraison = @Cout_livraison 
-                        WHERE id_commande_client = @Id";
+                        SET nombreArticleCClient = @Nombre_article,  
+                        numeroCommandeCClient = @Numero_de_commande, 
+                        prixTTCCClient = @Prix, 
+                        prixHorsTaxeCClient = @Prix_hors_taxe, 
+                        dateCommandeCClient = @Date_commande, 
+                        reductionCClient = @Reduction, 
+                        coutLivraisonCClient = @Cout_livraison 
+                        WHERE IdCommandeClient = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;

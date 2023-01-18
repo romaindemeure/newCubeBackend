@@ -10,7 +10,7 @@ using newCubeBackend.UserModel;
 namespace newCubeBackend.UserControllers
 {
     // method Route it's the link of API endpoint.
-    [Route("api/User")]
+    [Route("api/Utilisateur")]
     [ApiController]
     // Creating a child class UserController of ControllerBase
     public class UserController : ControllerBase
@@ -63,7 +63,7 @@ namespace newCubeBackend.UserControllers
         [HttpGet("{id}")]
         public String GetById(int id)
         {
-            string query = "SELECT * FROM tableUtilisateur WHERE id_utilisateur = @Id";
+            string query = "SELECT * FROM tableUtilisateur WHERE IdUtilisateur = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -89,7 +89,7 @@ namespace newCubeBackend.UserControllers
         public JsonResult Post(User user)
         {
             // string query = @"INSERT INTO cubeSQL.userTable(authMail, authPassword) VALUES(@Mail, @Password)";
-            string query = @"INSERT INTO tableUtilisateur(prenom, nom, email, mot_de_passe, adresse, code_postal, ville, numero_de_telephone, admin) 
+            string query = @"INSERT INTO tableUtilisateur(prenomUtilisateur, nomUtilisateur, emailUtilisateur, motDePasseUtilisateur, adresseUtilisateur, codePostaleUtilisateur, villeUtilisateur, telephoneUtilisateur, administrateur) 
                             VALUES (@Prenom, @Nom, @Email, @Mot_de_passe, @Adresse, @Code_postal, @Ville, @Numero_de_telephone, @Admin)";
 
             DataTable table = new DataTable();
@@ -121,7 +121,7 @@ namespace newCubeBackend.UserControllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"delete from tableUtilisateur where id_utilisateur = @Id;";
+            string query = @"delete from tableUtilisateur where IdUtilisateur = @Id;";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -145,15 +145,15 @@ namespace newCubeBackend.UserControllers
         public JsonResult Put(int id, User user)
         {
             var sql = @"UPDATE tableUtilisateur
-                        SET prenom = @Prenom,  
-                        nom = @Nom, 
-                        email = @Email, 
-                        mot_de_passe = @Mot_de_passe, 
-                        adresse = @Adresse, 
-                        code_postal = @Code_postal, 
-                        ville = @Ville, 
-                        numero_de_telephone = @Numero_de_telephone 
-                        WHERE id_utilisateur = @Id";
+                        SET prenomUtilisateur = @Prenom,  
+                        nomUtilisateur = @Nom, 
+                        emailUtilisateur = @Email, 
+                        motDePasseUtilisateur = @Mot_de_passe, 
+                        adresseUtilisateur = @Adresse, 
+                        codePostaleUtilisateur = @Code_postal, 
+                        villeUtilisateur = @Ville, 
+                        telephoneUtilisateur = @Numero_de_telephone 
+                        WHERE IdUtilisateur = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
