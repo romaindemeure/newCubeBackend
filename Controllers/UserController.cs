@@ -26,7 +26,7 @@ namespace newCubeBackend.UserControllers
         public String Get()
         {
             // Create query in string with SQL command inside.
-            string query = "SELECT * FROM userTable";
+            string query = "SELECT * FROM tableUtilisateur";
 
             // Create object table with the method new DataTable() of type DataTable.
             DataTable table = new DataTable();
@@ -63,7 +63,7 @@ namespace newCubeBackend.UserControllers
         [HttpGet("{id}")]
         public String GetById(int id)
         {
-            string query = "SELECT * FROM userTable WHERE id_user = @Id";
+            string query = "SELECT * FROM tableUtilisateur WHERE id_utilisateur = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -89,8 +89,8 @@ namespace newCubeBackend.UserControllers
         public JsonResult Post(User user)
         {
             // string query = @"INSERT INTO cubeSQL.userTable(authMail, authPassword) VALUES(@Mail, @Password)";
-            string query = @"INSERT INTO userTable(first_name, last_name, email, user_password, address, postal_code, town, phone_number, admin) 
-                            VALUES (@FirstName, @LastName, @Email, @UserPassword, @Address, @PostalCode, @Town, @PhoneNumber, @Admin)";
+            string query = @"INSERT INTO tableUtilisateur(prenom, nom, email, mot_de_passe, adresse, code_postal, ville, numero_de_telephone, admin) 
+                            VALUES (@Prenom, @Nom, @Email, @Mot_de_passe, @Adresse, @Code_postal, @Ville, @Numero_de_telephone, @Admin)";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -99,14 +99,14 @@ namespace newCubeBackend.UserControllers
             conn.Open();
             MySqlCommand cmd = new MySqlCommand(query, conn);
 
-            cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-            cmd.Parameters.AddWithValue("@LastName", user.LastName);
+            cmd.Parameters.AddWithValue("@Prenom", user.Prenom);
+            cmd.Parameters.AddWithValue("@Nom", user.Nom);
             cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@UserPassword", user.UserPassword);
-            cmd.Parameters.AddWithValue("@Address", user.Address);
-            cmd.Parameters.AddWithValue("@PostalCode", user.PostalCode);
-            cmd.Parameters.AddWithValue("@Town", user.Town);
-            cmd.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
+            cmd.Parameters.AddWithValue("@Mot_de_passe", user.Mot_de_passe);
+            cmd.Parameters.AddWithValue("@Adresse", user.Adresse);
+            cmd.Parameters.AddWithValue("@Code_postal", user.Code_postal);
+            cmd.Parameters.AddWithValue("@Ville", user.Ville);
+            cmd.Parameters.AddWithValue("@Numero_de_telephone", user.Numero_de_telephone);
             cmd.Parameters.AddWithValue("@Admin", user.Admin);
 
             myReader = cmd.ExecuteReader();
@@ -121,7 +121,7 @@ namespace newCubeBackend.UserControllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"delete from userTable where id_user = @Id;";
+            string query = @"delete from tableUtilisateur where id_utilisateur = @Id;";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -144,16 +144,16 @@ namespace newCubeBackend.UserControllers
         [HttpPut("{id}")]
         public JsonResult Put(int id, User user)
         {
-            var sql = @"UPDATE userTable
-                        SET first_name = @FirstName,  
-                        last_name = @LastName, 
+            var sql = @"UPDATE tableUtilisateur
+                        SET prenom = @Prenom,  
+                        nom = @Nom, 
                         email = @Email, 
-                        user_password = @Password, 
-                        address = @Address, 
-                        postal_code = @PostalCode, 
-                        town = @Town, 
-                        phone_number = @PhoneNumber 
-                        WHERE id_user = @Id";
+                        mot_de_passe = @Mot_de_passe, 
+                        adresse = @Adresse, 
+                        code_postal = @Code_postal, 
+                        ville = @Ville, 
+                        numero_de_telephone = @Numero_de_telephone 
+                        WHERE id_utilisateur = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -162,14 +162,14 @@ namespace newCubeBackend.UserControllers
             conn.Open();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-            cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-            cmd.Parameters.AddWithValue("@LastName", user.LastName);
+            cmd.Parameters.AddWithValue("@Prenom", user.Prenom);
+            cmd.Parameters.AddWithValue("@Nom", user.Nom);
             cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@Password", user.UserPassword);
-            cmd.Parameters.AddWithValue("@Address", user.Address);
-            cmd.Parameters.AddWithValue("@PostalCode", user.PostalCode);
-            cmd.Parameters.AddWithValue("@Town", user.Town);
-            cmd.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
+            cmd.Parameters.AddWithValue("@Mot_de_passe", user.Mot_de_passe);
+            cmd.Parameters.AddWithValue("@Adresse", user.Adresse);
+            cmd.Parameters.AddWithValue("@Code_postal", user.Code_postal);
+            cmd.Parameters.AddWithValue("@Ville", user.Ville);
+            cmd.Parameters.AddWithValue("@Numero_de_telephone", user.Numero_de_telephone);
 
             cmd.Parameters.AddWithValue("@Id", id);
 

@@ -26,7 +26,7 @@ namespace newCubeBackend.CustomerOrderController
         public String Get()
         {
             // Create query in string with SQL command inside.
-            string query = "SELECT * FROM customerOrder";
+            string query = "SELECT * FROM commandeClient";
 
             // Create object table with the method new DataTable() of type DataTable.
             DataTable table = new DataTable();
@@ -63,7 +63,7 @@ namespace newCubeBackend.CustomerOrderController
         [HttpGet("{id}")]
         public String GetById(int id)
         {
-            string query = "SELECT * FROM customerOrder WHERE id_customer_order = @Id";
+            string query = "SELECT * FROM commandeClient WHERE id_commande_client = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -89,8 +89,8 @@ namespace newCubeBackend.CustomerOrderController
         public JsonResult Post(CustomerOrder customer_order)
         {
             // string query = @"INSERT INTO cubeSQL.userTable(authMail, authPassword) VALUES(@Mail, @Password)";
-            string query = @"INSERT INTO customerOrder(number_item_customer, order_customer, price_customer, price_without_tcc_customer, order_date_customer, discount_customer, delivery_cost_customer, order_item_id_customer) 
-                            VALUES (@NumberItemCustomer, @OrderCustomer, @PriceCustomer, @PriceWithoutTccCustomer, @OrderDateCustomer, @DiscountCustomer, @DeliveryCostCustomer, @OrderItemIdCustomer)";
+            string query = @"INSERT INTO commandeClient(nombre_article, numero_de_commande, prix, prix_hors_taxe, date_commande, reduction, cout_livraison) 
+                            VALUES (@Nombre_article, @Numero_de_commande, @Prix, @Prix_hors_taxe, @Date_commande, @Reduction, @Cout_livraison)";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -99,14 +99,13 @@ namespace newCubeBackend.CustomerOrderController
             conn.Open();
             MySqlCommand cmd = new MySqlCommand(query, conn);
 
-            cmd.Parameters.AddWithValue("@NumberItemCustomer", customer_order.NumberItemCustomer);
-            cmd.Parameters.AddWithValue("@OrderCustomer", customer_order.OrderCustomer);
-            cmd.Parameters.AddWithValue("@PriceCustomer", customer_order.PriceCustomer);
-            cmd.Parameters.AddWithValue("@PriceWithoutTccCustomer", customer_order.PriceWithoutTccCustomer);
-            cmd.Parameters.AddWithValue("@OrderDateCustomer", customer_order.OrderDateCustomer);
-            cmd.Parameters.AddWithValue("@DiscountCustomer", customer_order.DiscountCustomer);
-            cmd.Parameters.AddWithValue("@DeliveryCostCustomer", customer_order.DeliveryCostCustomer);
-            cmd.Parameters.AddWithValue("@OrderItemIdCustomer", customer_order.OrderItemIdCustomer);
+            cmd.Parameters.AddWithValue("@Nombre_article", customer_order.Nombre_article);
+            cmd.Parameters.AddWithValue("@Numero_de_commande", customer_order.Numero_de_commande);
+            cmd.Parameters.AddWithValue("@Prix", customer_order.Prix);
+            cmd.Parameters.AddWithValue("@Prix_hors_taxe", customer_order.Prix_hors_taxe);
+            cmd.Parameters.AddWithValue("@Date_commande", customer_order.Date_commande);
+            cmd.Parameters.AddWithValue("@Reduction", customer_order.Reduction);
+            cmd.Parameters.AddWithValue("@Cout_livraison", customer_order.Cout_livraison);
 
             myReader = cmd.ExecuteReader();
             table.Load(myReader);
@@ -120,7 +119,7 @@ namespace newCubeBackend.CustomerOrderController
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"delete from customerOrder where id_customer_order = @Id;";
+            string query = @"delete from commandeClient where id_commande_client = @Id;";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -143,16 +142,15 @@ namespace newCubeBackend.CustomerOrderController
         [HttpPut("{id}")]
         public JsonResult Put(int id, CustomerOrder customer_order)
         {
-            var sql = @"UPDATE customerOrder
-                        SET number_item_customer = @NumberItemCustomer,  
-                        order_customer = @OrderCustomer, 
-                        price_customer = @PriceCustomer, 
-                        price_without_tcc_customer = @PriceWithoutTccCustomer, 
-                        order_date_customer = @OrderDateCustomer, 
-                        discount_customer = @DiscountCustomer, 
-                        delivery_cost_customer = @DeliveryCostCustomer, 
-                        order_item_id_customer = @OrderItemIdCustomer 
-                        WHERE id_customer_order = @Id";
+            var sql = @"UPDATE commandeClient
+                        SET nombre_article = @Nombre_article,  
+                        numero_de_commande = @Numero_de_commande, 
+                        prix = @Prix, 
+                        prix_hors_taxe = @Prix_hors_taxe, 
+                        date_commande = @Date_commande, 
+                        reduction = @Reduction, 
+                        cout_livraison = @Cout_livraison 
+                        WHERE id_commande_client = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -161,14 +159,13 @@ namespace newCubeBackend.CustomerOrderController
             conn.Open();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-            cmd.Parameters.AddWithValue("@NumberItemCustomer", customer_order.NumberItemCustomer);
-            cmd.Parameters.AddWithValue("@OrderCustomer", customer_order.OrderCustomer);
-            cmd.Parameters.AddWithValue("@PriceCustomer", customer_order.PriceCustomer);
-            cmd.Parameters.AddWithValue("@PriceWithoutTccCustomer", customer_order.PriceWithoutTccCustomer);
-            cmd.Parameters.AddWithValue("@OrderDateCustomer", customer_order.OrderDateCustomer);
-            cmd.Parameters.AddWithValue("@DiscountCustomer", customer_order.DiscountCustomer);
-            cmd.Parameters.AddWithValue("@DeliveryCostCustomer", customer_order.DeliveryCostCustomer);
-            cmd.Parameters.AddWithValue("@OrderItemIdCustomer", customer_order.OrderItemIdCustomer);
+            cmd.Parameters.AddWithValue("@Nombre_article", customer_order.Nombre_article);
+            cmd.Parameters.AddWithValue("@Numero_de_commande", customer_order.Numero_de_commande);
+            cmd.Parameters.AddWithValue("@Prix", customer_order.Prix);
+            cmd.Parameters.AddWithValue("@Prix_hors_taxe", customer_order.Prix_hors_taxe);
+            cmd.Parameters.AddWithValue("@Date_commande", customer_order.Date_commande);
+            cmd.Parameters.AddWithValue("@Reduction", customer_order.Reduction);
+            cmd.Parameters.AddWithValue("@Cout_livraison", customer_order.Cout_livraison);
 
             cmd.Parameters.AddWithValue("@Id", id);
 

@@ -7,14 +7,14 @@ namespace newCubeBackend.UserModel
 {
     public class User
     {
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        public string? Prenom { get; set; }
+        public string? Nom { get; set; }
         public string? Email { get; set; }
-        public string? UserPassword { get; set; }
-        public string? Address { get; set; }
-        public string? PostalCode { get; set; }
-        public string? Town { get; set; }
-        public string? PhoneNumber { get; set; }
+        public string? Mot_de_passe { get; set; }
+        public string? Adresse { get; set; }
+        public string? Code_postal { get; set; }
+        public string? Ville { get; set; }
+        public string? Numero_de_telephone { get; set; }
         public bool Admin { get; set; }
     }
 }

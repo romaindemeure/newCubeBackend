@@ -7,13 +7,12 @@ namespace newCubeBackend.CustomerOrderModel
 {
     public class CustomerOrder
     {
-        public string? NumberItemCustomer { get; set; }
-        public string? OrderCustomer { get; set; }
-        public string? PriceCustomer { get; set; }
-        public string? PriceWithoutTccCustomer { get; set; }
-        public string? OrderDateCustomer { get; set; }
-        public string? DiscountCustomer { get; set; }
-        public string? DeliveryCostCustomer { get; set; }
-        public string? OrderItemIdCustomer { get; set; }
+        public string? Nombre_article { get; set; }
+        public string? Numero_de_commande { get; set; }
+        public string? Prix { get; set; }
+        public string? Prix_hors_taxe { get; set; }
+        public string? Date_commande { get; set; }
+        public string? Reduction { get; set; }
+        public string? Cout_livraison { get; set; }
     }
 }
