@@ -3,19 +3,19 @@ using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using newCubeBackend.Connection;
 using System.Data;
-using newCubeBackend.UserModel;
+using newCubeBackend.CommandeFournisseurModel;
 
 // Définition du nom de l'espace via (namespace).
-namespace newCubeBackend.UtilisateurController
+namespace newCubeBackend.CommandeFournisseurController
 {
     // La Route de l'API pointe sur api/Utilisateur.
-    [Route("api/Utilisateur")]
+    [Route("api/CommandeFournisseur")]
     [ApiController]
     // Creéation d'une class enfant UtilisateurController qui hérite de ControllerBase.
-    public class UtilisateurController : ControllerBase
+    public class CommandeFournisseurController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public UtilisateurController(IConfiguration configuration)
+        public CommandeFournisseurController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -25,7 +25,7 @@ namespace newCubeBackend.UtilisateurController
         public String Get()
         {
             // Créer une variable query de type string avec notre requette SQL. Ici nous selectionnont tout de la table tableUtilisateur.
-            string query = "SELECT * FROM tableUtilisateur";
+            string query = "SELECT * FROM tableCommandeFournisseur";
 
             // Créer un objet table avec la méthode new DataTable() de type DataTable.
             DataTable table = new DataTable();
@@ -64,7 +64,7 @@ namespace newCubeBackend.UtilisateurController
         [HttpGet("{id}")]
         public String GetById(int id)
         {
-            string query = "SELECT * FROM tableUtilisateur WHERE IdUtilisateur = @Id";
+            string query = "SELECT * FROM tableCommandeFournisseur WHERE IdCommandeFournisseur = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -87,11 +87,11 @@ namespace newCubeBackend.UtilisateurController
         }
 
         [HttpPost]
-        public JsonResult Post(User user)
+        public JsonResult Post(CommandeFournisseur commandeFournisseur)
         {
             // string query = @"INSERT INTO cubeSQL.userTable(authMail, authPassword) VALUES(@Mail, @Password)";
-            string query = @"INSERT INTO tableUtilisateur(prenomUtilisateur, nomUtilisateur, emailUtilisateur, motDePasseUtilisateur, adresseUtilisateur, codePostaleUtilisateur, villeUtilisateur, telephoneUtilisateur, administrateur) 
-                            VALUES (@Prenom, @Nom, @Email, @Mot_de_passe, @Adresse, @Code_postal, @Ville, @Numero_de_telephone, @Admin)";
+            string query = @"INSERT INTO tableCommandeFournisseur(nombreArticleCFournisseur, numeroCommandeCFournisseur, prixHorsTaxeCFournisseur, prixTTCCFournisseur, dateCommandeCFournisseur, reductionCFournisseur, coutLivraisonCFournisseur) 
+                            VALUES (@Nombre_Article_CFournisseur, @Numero_Commande_CFournisseur, @Prix_Hors_Taxe_CFournisseur, @Prix_TTC_CFournisseur, @Date_Commande_CFournisseur, @Reduction_CFournisseur, @Cout_Livraison_CFournisseur)";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -100,15 +100,13 @@ namespace newCubeBackend.UtilisateurController
             conn.Open();
             MySqlCommand cmd = new MySqlCommand(query, conn);
 
-            cmd.Parameters.AddWithValue("@Prenom", user.Prenom);
-            cmd.Parameters.AddWithValue("@Nom", user.Nom);
-            cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@Mot_de_passe", user.Mot_de_passe);
-            cmd.Parameters.AddWithValue("@Adresse", user.Adresse);
-            cmd.Parameters.AddWithValue("@Code_postal", user.Code_postal);
-            cmd.Parameters.AddWithValue("@Ville", user.Ville);
-            cmd.Parameters.AddWithValue("@Numero_de_telephone", user.Numero_de_telephone);
-            cmd.Parameters.AddWithValue("@Admin", user.Admin);
+            cmd.Parameters.AddWithValue("@Nombre_Article_CFournisseur", commandeFournisseur.Nombre_Article_CFournisseur);
+            cmd.Parameters.AddWithValue("@Numero_Commande_CFournisseur", commandeFournisseur.Numero_Commande_CFournisseur);
+            cmd.Parameters.AddWithValue("@Prix_Hors_Taxe_CFournisseur", commandeFournisseur.Prix_Hors_Taxe_CFournisseur);
+            cmd.Parameters.AddWithValue("@Prix_TTC_CFournisseur", commandeFournisseur.Prix_TTC_CFournisseur);
+            cmd.Parameters.AddWithValue("@Date_Commande_CFournisseur", commandeFournisseur.Date_Commande_CFournisseur);
+            cmd.Parameters.AddWithValue("@Reduction_CFournisseur", commandeFournisseur.Reduction_CFournisseur);
+            cmd.Parameters.AddWithValue("@Cout_Livraison_CFournisseur", commandeFournisseur.Cout_Livraison_CFournisseur);
 
             myReader = cmd.ExecuteReader();
             table.Load(myReader);
@@ -122,7 +120,7 @@ namespace newCubeBackend.UtilisateurController
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"delete from tableUtilisateur where IdUtilisateur = @Id;";
+            string query = @"delete from tableCommandeFournisseur where IdCommandeFournisseur = @Id;";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -143,18 +141,17 @@ namespace newCubeBackend.UtilisateurController
         }
 
         [HttpPut("{id}")]
-        public JsonResult Put(int id, User user)
+        public JsonResult Put(int id, CommandeFournisseur commandeFournisseur)
         {
-            var sql = @"UPDATE tableUtilisateur
-                        SET prenomUtilisateur = @Prenom,  
-                        nomUtilisateur = @Nom, 
-                        emailUtilisateur = @Email, 
-                        motDePasseUtilisateur = @Mot_de_passe, 
-                        adresseUtilisateur = @Adresse, 
-                        codePostaleUtilisateur = @Code_postal, 
-                        villeUtilisateur = @Ville, 
-                        telephoneUtilisateur = @Numero_de_telephone 
-                        WHERE IdUtilisateur = @Id";
+            var sql = @"UPDATE tableCommandeFournisseur
+                        SET nombreArticleCFournisseur = @Nombre_Article_CFournisseur,  
+                        numeroCommandeCFournisseur = @Numero_Commande_CFournisseur, 
+                        prixHorsTaxeCFournisseur = @Prix_Hors_Taxe_CFournisseur, 
+                        prixTTCCFournisseur = @Prix_TTC_CFournisseur, 
+                        dateCommandeCFournisseur = @Date_Commande_CFournisseur, 
+                        reductionCFournisseur = @Reduction_CFournisseur, 
+                        coutLivraisonCFournisseur = @Cout_Livraison_CFournisseur
+                        WHERE IdCommandeFournisseur = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -163,14 +160,13 @@ namespace newCubeBackend.UtilisateurController
             conn.Open();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-            cmd.Parameters.AddWithValue("@Prenom", user.Prenom);
-            cmd.Parameters.AddWithValue("@Nom", user.Nom);
-            cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@Mot_de_passe", user.Mot_de_passe);
-            cmd.Parameters.AddWithValue("@Adresse", user.Adresse);
-            cmd.Parameters.AddWithValue("@Code_postal", user.Code_postal);
-            cmd.Parameters.AddWithValue("@Ville", user.Ville);
-            cmd.Parameters.AddWithValue("@Numero_de_telephone", user.Numero_de_telephone);
+            cmd.Parameters.AddWithValue("@Nombre_Article_CFournisseur", commandeFournisseur.Nombre_Article_CFournisseur);
+            cmd.Parameters.AddWithValue("@Numero_Commande_CFournisseur", commandeFournisseur.Numero_Commande_CFournisseur);
+            cmd.Parameters.AddWithValue("@Prix_Hors_Taxe_CFournisseur", commandeFournisseur.Prix_Hors_Taxe_CFournisseur);
+            cmd.Parameters.AddWithValue("@Prix_TTC_CFournisseur", commandeFournisseur.Prix_TTC_CFournisseur);
+            cmd.Parameters.AddWithValue("@Date_Commande_CFournisseur", commandeFournisseur.Date_Commande_CFournisseur);
+            cmd.Parameters.AddWithValue("@Reduction_CFournisseur", commandeFournisseur.Reduction_CFournisseur);
+            cmd.Parameters.AddWithValue("@Cout_Livraison_CFournisseur", commandeFournisseur.Cout_Livraison_CFournisseur);
 
             cmd.Parameters.AddWithValue("@Id", id);
 

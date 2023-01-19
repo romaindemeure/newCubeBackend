@@ -5,14 +5,13 @@ using newCubeBackend.Connection;
 using System.Data;
 using newCubeBackend.FournisseurModel;
 
-
-// Define name of space. 
+// Définition du nom de l'espace via (namespace).
 namespace newCubeBackend.FournisseurController
 {
-    // method Route it's the link of API endpoint.
+    // La Route de l'API pointe sur api/Utilisateur.
     [Route("api/Fournisseur")]
     [ApiController]
-    // Creating a child class UserController of ControllerBase
+    // Creéation d'une class enfant UtilisateurController qui hérite de ControllerBase.
     public class FournisseurController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -21,41 +20,43 @@ namespace newCubeBackend.FournisseurController
             _configuration = configuration;
         }
 
-        // This method it's used for requests HTTP of type Get.
+        // Cette méthod est utilisé pour les requettes HTTP de type Get.
         [HttpGet]
         public String Get()
         {
-            // Create query in string with SQL command inside.
+            // Créer une variable query de type string avec notre requette SQL. Ici nous selectionnont tout de la table tableUtilisateur.
             string query = "SELECT * FROM tableFournisseur";
 
-            // Create object table with the method new DataTable() of type DataTable.
+            // Créer un objet table avec la méthode new DataTable() de type DataTable.
             DataTable table = new DataTable();
-            // Create object named myReader of type MySqlDataReader. This method myReader it's used after.
+            // Creéer une objet nommé myReader de type MySqlDataReader, cette méthod est utilisé pour plutard.
             MySqlDataReader myReader;
-            // Create connection nammed conn of MySqlConnection. he use DBConnect.GetDBConnection(). this method it's Define on ../Controllers/DBConnect.cs
+            // Creéer une variable pour la connection nommé conn de type MySqlConnection qui utilise DBConnect.GetDBConnection(). Cette méthode est définie dans ../Controllers/DBConnect.cs
             MySqlConnection conn = DBConnect.GetDBConnection();
 
-            // Open the conn define line above
+            // On ouvre le connecteur définine sur la ligne au dessus pour pouvoir avoir accès a la base de donnée
             conn.Open();
 
-            // Create the variable cmd of type MySqlCommand. He create a new MySqlCommand with paramaters the query (it's the SQL command define above) and (conn it's the connection of DB).
-            // For use MySqlCommand, you need to use using MySql.Data.MySqlClient; at up of the file.
+            // Creation de la variable cmd de type MySqlCommand. Elle créer une new MySqlCommand avec les parametres query (C'est la commande SQL pour nous avons définie plutôt) et conn (C'est la connection pour avoir accès a la DB)
+            // Pour utiliser MySqlCommand, vous avez besoin d'impoter MySql.Data.MySqlClient; en haut de votre code.
             MySqlCommand cmd = new MySqlCommand(query, conn);
 
-            //  With myReader use cmd define above for ExecuteReader(); 
+            // Avec myReader utiliser cmd définie plutot pour utilisé ExecuteReader();
             myReader = cmd.ExecuteReader();
-            // From table load the data of myReader.
+
+            // Avec la variable load charger les donnés qu'il y a dans myReader.
             table.Load(myReader);
 
-            // After have Load the data in table we can close the reader and the conn.
+            // Avec avoir charger les données dans la variable table nous pouvons fermer le reader et le connecteur avec la méthode Close().
+            // Il est important de ne pas oublier de Close() le myReader et conn pour ne pas avoir des bugs sur nos données ou connection.
             myReader.Close();
             conn.Close();
 
-            // Use JsonConvert.SerializeObject() for the module Newtonsoft.Json; with parameter table define above and Formatting.Indented it's for do not see line of data.
-            // this method it's save in json of type string
+            // Utilisé JsonConvert.SerializeObject() qui viens du module Newtonsoft.Json; avec le paramètre table définie plutôt et Formatting.Indented pour avoir une bonne indentation de pour json
+            // Cette méthode sauvegarde un json formaté avec nos données dans une variable de type string.
             string json = JsonConvert.SerializeObject(table, Formatting.Indented);
 
-            // return it's the last command of the method Get(). he return the json define above.
+            // Nous retournons le JSON que nous avons créer. Nous ne somme pas obligé de retourner quelques-choses avec la méthode HTTP GET. mais c'est mieux de le faire. 
             return json;
         }
 
