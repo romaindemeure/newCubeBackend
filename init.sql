@@ -58,3 +58,17 @@ CREATE TABLE tableFournisseur (
   descriptionFournisseur varchar(255) NOT NULL,
   PRIMARY KEY(IdFournisseur)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE commandefournisseur (
+  IdCommandeFournisseur int AUTO_INCREMENT,
+  nombreArticleCFournisseur varchar(255) NOT NULL,
+  numeroCommandeCFournisseur varchar(255) NOT NULL,
+  prixHorsTaxeCFournisseur varchar(255) NOT NULL,
+  prixTTCCFournisseur varchar(255) NOT NULL,
+  dateCommandeCFournisseur varchar(255) NOT NULL,
+  reductionCFournisseur varchar(255) NOT NULL,
+  coutLivraisonCFournisseur varchar(255) NOT NULL,
+  idFournisseurCommande varchar(255) NOT NULL
+  PRIMARY KEY(IdCommandeFournisseur)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
