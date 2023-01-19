@@ -3,20 +3,20 @@ using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using newCubeBackend.Connection;
 using System.Data;
-using newCubeBackend.UserModel;
+using newCubeBackend.ArticleModel;
 
 
 // Define name of space. 
-namespace newCubeBackend.UserControllers
+namespace newCubeBackend.ArticleController
 {
     // method Route it's the link of API endpoint.
-    [Route("api/Utilisateur")]
+    [Route("api/Article")]
     [ApiController]
-    // Creating a child class UserController of ControllerBase
-    public class UserController : ControllerBase
+    // Creating a child class ArticleController of ControllerBase
+    public class ArticleController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public UserController(IConfiguration configuration)
+        public ArticleController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -26,7 +26,7 @@ namespace newCubeBackend.UserControllers
         public String Get()
         {
             // Create query in string with SQL command inside.
-            string query = "SELECT * FROM tableUtilisateur";
+            string query = "SELECT * FROM tableArticle";
 
             // Create object table with the method new DataTable() of type DataTable.
             DataTable table = new DataTable();
@@ -63,7 +63,7 @@ namespace newCubeBackend.UserControllers
         [HttpGet("{id}")]
         public String GetById(int id)
         {
-            string query = "SELECT * FROM tableUtilisateur WHERE IdUtilisateur = @Id";
+            string query = "SELECT * FROM tableArticle WHERE IdArticle = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -86,11 +86,11 @@ namespace newCubeBackend.UserControllers
         }
 
         [HttpPost]
-        public JsonResult Post(User user)
+        public JsonResult Post(Article article)
         {
             // string query = @"INSERT INTO cubeSQL.userTable(authMail, authPassword) VALUES(@Mail, @Password)";
-            string query = @"INSERT INTO tableUtilisateur(prenomUtilisateur, nomUtilisateur, emailUtilisateur, motDePasseUtilisateur, adresseUtilisateur, codePostaleUtilisateur, villeUtilisateur, telephoneUtilisateur, administrateur) 
-                            VALUES (@Prenom, @Nom, @Email, @Mot_de_passe, @Adresse, @Code_postal, @Ville, @Numero_de_telephone, @Admin)";
+            string query = @"INSERT INTO tableArticle(nomArticle, anneeArticle, prixUnitaireArticle, prixCartonArticle, prixFournisseurArticle, referenceArticle, tvaArticle, domaineArticle, descriptionArticle, familleArticle, coutStockageArticle) 
+                            VALUES (@Nom_Article, @Annee_Article, @Prix_Unitaire_Article, @Prix_Carton_Article, @Prix_Fournisseur_Article, @Reference_Article, @TVA_Article, @Domaine_Article, @Description_Article, @Famille_Article, @Cout_Stockage_Article)";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -99,15 +99,17 @@ namespace newCubeBackend.UserControllers
             conn.Open();
             MySqlCommand cmd = new MySqlCommand(query, conn);
 
-            cmd.Parameters.AddWithValue("@Prenom", user.Prenom);
-            cmd.Parameters.AddWithValue("@Nom", user.Nom);
-            cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@Mot_de_passe", user.Mot_de_passe);
-            cmd.Parameters.AddWithValue("@Adresse", user.Adresse);
-            cmd.Parameters.AddWithValue("@Code_postal", user.Code_postal);
-            cmd.Parameters.AddWithValue("@Ville", user.Ville);
-            cmd.Parameters.AddWithValue("@Numero_de_telephone", user.Numero_de_telephone);
-            cmd.Parameters.AddWithValue("@Admin", user.Admin);
+            cmd.Parameters.AddWithValue("@Nom_Article", article.Nom_Article);
+            cmd.Parameters.AddWithValue("@Annee_Article", article.Annee_Article);
+            cmd.Parameters.AddWithValue("@Prix_Unitaire_Article", article.Prix_Unitaire_Article);
+            cmd.Parameters.AddWithValue("@Prix_Carton_Article", article.Prix_Carton_Article);
+            cmd.Parameters.AddWithValue("@Prix_Fournisseur_Article", article.Prix_Fournisseur_Article);
+            cmd.Parameters.AddWithValue("@Reference_Article", article.Reference_Article);
+            cmd.Parameters.AddWithValue("@TVA_Article", article.TVA_Article);
+            cmd.Parameters.AddWithValue("@Domaine_Article", article.Domaine_Article);
+            cmd.Parameters.AddWithValue("@Description_Article", article.Description_Article);
+            cmd.Parameters.AddWithValue("@Famille_Article", article.Famille_Article);
+            cmd.Parameters.AddWithValue("@Cout_Stockage_Article", article.Cout_Stockage_Article);
 
             myReader = cmd.ExecuteReader();
             table.Load(myReader);
@@ -121,7 +123,7 @@ namespace newCubeBackend.UserControllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"delete from tableUtilisateur where IdUtilisateur = @Id;";
+            string query = @"delete from tableArticle where IdArticle = @Id;";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -142,18 +144,21 @@ namespace newCubeBackend.UserControllers
         }
 
         [HttpPut("{id}")]
-        public JsonResult Put(int id, User user)
+        public JsonResult Put(int id, Article article)
         {
-            var sql = @"UPDATE tableUtilisateur
-                        SET prenomUtilisateur = @Prenom,  
-                        nomUtilisateur = @Nom, 
-                        emailUtilisateur = @Email, 
-                        motDePasseUtilisateur = @Mot_de_passe, 
-                        adresseUtilisateur = @Adresse, 
-                        codePostaleUtilisateur = @Code_postal, 
-                        villeUtilisateur = @Ville, 
-                        telephoneUtilisateur = @Numero_de_telephone 
-                        WHERE IdUtilisateur = @Id";
+            var sql = @"UPDATE tableArticle
+                        SET nomArticle = @Nom_Article,  
+                        anneeArticle = @Annee_Article, 
+                        prixUnitaireArticle = @Prix_Unitaire_Article, 
+                        prixCartonArticle = @Prix_Carton_Article, 
+                        prixFournisseurArticle = @Prix_Fournisseur_Article, 
+                        referenceArticle = @Reference_Article, 
+                        tvaArticle = @TVA_Article, 
+                        domaineArticle = @Domaine_Article,
+                        descriptionArticle = @Description_Article,
+                        familleArticle = @Famille_Article,
+                        coutStockageArticle = @Cout_Stockage_Article
+                        WHERE IdArticle = @Id";
 
             DataTable table = new DataTable();
             MySqlDataReader myReader;
@@ -162,14 +167,17 @@ namespace newCubeBackend.UserControllers
             conn.Open();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-            cmd.Parameters.AddWithValue("@Prenom", user.Prenom);
-            cmd.Parameters.AddWithValue("@Nom", user.Nom);
-            cmd.Parameters.AddWithValue("@Email", user.Email);
-            cmd.Parameters.AddWithValue("@Mot_de_passe", user.Mot_de_passe);
-            cmd.Parameters.AddWithValue("@Adresse", user.Adresse);
-            cmd.Parameters.AddWithValue("@Code_postal", user.Code_postal);
-            cmd.Parameters.AddWithValue("@Ville", user.Ville);
-            cmd.Parameters.AddWithValue("@Numero_de_telephone", user.Numero_de_telephone);
+            cmd.Parameters.AddWithValue("@Nom_Article", article.Nom_Article);
+            cmd.Parameters.AddWithValue("@Annee_Article", article.Annee_Article);
+            cmd.Parameters.AddWithValue("@Prix_Unitaire_Article", article.Prix_Unitaire_Article);
+            cmd.Parameters.AddWithValue("@Prix_Carton_Article", article.Prix_Carton_Article);
+            cmd.Parameters.AddWithValue("@Prix_Fournisseur_Article", article.Prix_Fournisseur_Article);
+            cmd.Parameters.AddWithValue("@Reference_Article", article.Reference_Article);
+            cmd.Parameters.AddWithValue("@TVA_Article", article.TVA_Article);
+            cmd.Parameters.AddWithValue("@Domaine_Article", article.Domaine_Article);
+            cmd.Parameters.AddWithValue("@Description_Article", article.Description_Article);
+            cmd.Parameters.AddWithValue("@Famille_Article", article.Famille_Article);
+            cmd.Parameters.AddWithValue("@Cout_Stockage_Article", article.Cout_Stockage_Article);
 
             cmd.Parameters.AddWithValue("@Id", id);
 
@@ -184,5 +192,3 @@ namespace newCubeBackend.UserControllers
         }
     }
 }
-
-

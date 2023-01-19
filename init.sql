@@ -13,16 +13,48 @@ CREATE TABLE tableUtilisateur (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE commandeClient (
+CREATE TABLE tableCommandeClient (
   IdCommandeClient int AUTO_INCREMENT,
   nombreArticleCClient varchar(255) NOT NULL,
   numeroCommandeCClient varchar(255) NOT NULL,
-  prixTTCCClient varchar(255) NOT NULL,
+  prixTTCClient varchar(255) NOT NULL,
   prixHorsTaxeCClient varchar(255) NOT NULL,
   dateCommandeCClient varchar(255) NOT NULL,
   reductionCClient varchar(255) NOT NULL,
   coutLivraisonCClient varchar(255) NOT NULL,
-  IdUtilisateur INT,
-  FOREIGN KEY (IdUtilisateur) REFERENCES tableUtilisateur (IdUtilisateur),
+  -- IdUtilisateur INT,
+  -- FOREIGN KEY (IdUtilisateur) REFERENCES tableUtilisateur (IdUtilisateur),
   PRIMARY KEY(IdCommandeClient)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE tableArticle (
+  IdArticle int AUTO_INCREMENT,
+  nomArticle varchar(255) NOT NULL,
+  anneeArticle varchar(255) NOT NULL,
+  prixUnitaireArticle varchar(255) NOT NULL,
+  prixCartonArticle varchar(255) NOT NULL,
+  prixFournisseurArticle varchar(255) NOT NULL,
+  referenceArticle varchar(255) NOT NULL,
+  tvaArticle varchar(255) NOT NULL,
+  domaineArticle varchar(255) NOT NULL,
+  descriptionArticle varchar(255) NOT NULL,
+  familleArticle varchar(255) NOT NULL,
+  coutStockageArticle varchar(255) NOT NULL,
+  PRIMARY KEY(IdArticle)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE tableFournisseur (
+  IdFournisseur int AUTO_INCREMENT,
+  nomFournisseur varchar(255) NOT NULL,
+  emailFournisseur varchar(255) NOT NULL,
+  telephoneUtilisateur varchar(255) NOT NULL,
+  siretFournisseur varchar(255) NOT NULL,
+  coordonneesBancarieFournisseur varchar(255) NOT NULL,
+  adresseFournisseur varchar(255) NOT NULL,
+  codePostaleUtilisateur varchar(255) NOT NULL,
+  villeFournisseur varchar(255) NOT NULL,
+  descriptionFournisseur varchar(255) NOT NULL,
+  PRIMARY KEY(IdFournisseur)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
